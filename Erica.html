@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Environmental Health Cryptogram</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#e8f5e9;
+text-align:center;
+padding:20px;
+}
+
+.container{
+background:white;
+padding:25px;
+border-radius:10px;
+max-width:800px;
+margin:auto;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h1{
+color:#2e7d32;
+}
+
+.cryptogram{
+margin-top:30px;
+}
+
+.box{
+display:inline-block;
+text-align:center;
+width:35px;
+margin:3px;
+}
+
+.box input{
+width:30px;
+text-align:center;
+font-size:18px;
+border:none;
+border-bottom:2px solid black;
+outline:none;
+}
+
+.number{
+margin-top:5px;
+font-weight:bold;
+}
+
+button{
+padding:10px 15px;
+margin-top:20px;
+font-size:16px;
+background:#2e7d32;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1b5e20;
+}
+
+#message{
+margin-top:15px;
+font-weight:bold;
+}
+
+#explanation{
+display:none;
+background:#f1f8e9;
+padding:15px;
+margin-top:20px;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌍 Environmental Health Cryptogram</h1>
+
+<p><b>Directions:</b> Decode the message. Type the letters above each number.  
+You only have <b>3 attempts</b>.</p>
+
+<div class="cryptogram" id="puzzle"></div>
+
+<button onclick="checkAnswer()">Check Answer</button>
+
+<p id="message"></p>
+
+<div id="explanation">
+
+<h3>✅ Correct!</h3>
+
+<p><b>ENVIRONMENT PROTECTION</b></p>
+
+<p>
+Environmental protection means taking care of our surroundings by reducing
+pollution, managing waste properly, and protecting natural resources.
+When the environment is clean, people are healthier and diseases can be prevented.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+let phrase="ENVIRONMENT PROTECTION";
+let attempts=3;
+
+let container=document.getElementById("puzzle");
+
+for(let i=0;i<phrase.length;i++){
+
+let char=phrase[i];
+
+if(char===" "){
+
+container.innerHTML+="&nbsp;&nbsp;&nbsp;";
+continue;
+
+}
+
+let number=char.charCodeAt(0)-64;
+
+container.innerHTML+=`
+<div class="box">
+<input maxlength="1" id="i${i}">
+<div class="number">${number}</div>
+</div>
+`;
+
+}
+
+/* HINT LETTERS */
+document.getElementById("i3").value="I";
+document.getElementById("i3").disabled=true;
+
+document.getElementById("i10").value="T";
+document.getElementById("i10").disabled=true;
+
+function checkAnswer(){
+
+let answer="";
+
+for(let i=0;i<phrase.length;i++){
+
+if(phrase[i]==" "){
+answer+=" ";
+continue;
+}
+
+let val=document.getElementById("i"+i).value.toUpperCase();
+answer+=val;
+
+}
+
+if(answer===phrase){
+
+document.getElementById("message").innerHTML="🎉 Correct!";
+document.getElementById("explanation").style.display="block";
+
+}
+
+else{
+
+attempts--;
+
+if(attempts>0){
+
+document.getElementById("message").innerHTML="❌ Wrong answer. Attempts left: "+attempts;
+
+}
+
+else{
+
+document.getElementById("message").innerHTML="🚫 No attempts left.";
+
+}
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
